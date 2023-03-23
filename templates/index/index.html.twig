@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <h1>Historical quotes</h1>
+            <div class="col-md-3">
+                {{ form(form) }}
+            </div>
+            <div class="col-md-9">
+                <div style="width: 800px;"><canvas id="acquisitions"></canvas></div>
+            </div>
+        </div>
+        {% if prices | length > 0 %}
+            <div class="row">
+                <div class="col-md-12">
+                    <table id="quotes-table" class="table">
+                        <tr>
+                            <th>Date</th>
+                            <th>Open</th>
+                            <th>High</th>
+                            <th>Low</th>
+                            <th>Close</th>
+                            <th>Volume</th>
+                        </tr>
+                        {% for price in prices %}
+                            <tr class="price-data" data-date="{{ price.date | date('Y-m-d') }}" data-open="{{ price.open }}" data-close="{{ price.close }}">
+                                <td>{{ price.date | date('Y-m-d') | default('') }}</td>
+                                <td>{{ price.open | default('') }}</td>
+                                <td>{{ price.high | default('') }}</td>
+                                <td>{{ price.low | default('') }}</td>
+                                <td>{{ price.close | default('') }}</td>
+                                <td>{{ price.volume | default('') }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
